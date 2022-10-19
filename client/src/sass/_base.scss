@@ -1,0 +1,30 @@
+:root {
+  --color-flame: #e4572e;
+  --color-blue-green: #17bebb;
+  --color-sunglow: #ffc914;
+  --color-raisin-black: #2e282a;
+  --color-green: #76b041;
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+
+  @media only screen and (max-width: 1157px){
+    font-size: 50%;
+  }
+}
+
+.App {
+  text-align: center;
+  height: 100vh;
+  background-color: oldlace;
+}

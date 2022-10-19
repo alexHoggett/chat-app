@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import React from "react";
+import React, { useState } from "react";
 import './App.css';
+import Chat from './pages/Chat.js';
+import Join from './pages/Join.js';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation
+} from "react-router-dom";
 
 function App() {
-  const [data, setData] = React.useState(null);
-
-  React.useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => setData(data.message))
-      .catch(err => console.log(err))
-  }, []);
 
   return (
     <div className="App">
-      <header className="App-header">
-       <p>{!data ? "Loading..." : data}</p>
-      </header>
+
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<Join />} />
+          <Route path="/chat" element={<Chat />} />
+        </Routes>
+      </Router>
+
     </div>
   );
 }
+
+
 
 export default App;

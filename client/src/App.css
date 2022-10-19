@@ -1,38 +1,201 @@
+:root {
+  --color-flame: #e4572e;
+  --color-blue-green: #17bebb;
+  --color-sunglow: #ffc914;
+  --color-raisin-black: #2e282a;
+  --color-green: #76b041; }
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; }
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; }
+  @media only screen and (max-width: 1157px) {
+    html {
+      font-size: 50%; } }
+
 .App {
   text-align: center;
-}
+  height: 100vh;
+  background-color: oldlace; }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+.heading {
+  text-align: left;
+  margin-top: 0;
+  padding: 4rem;
+  font-family: 'Syne', sans-serif; }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+.title {
+  display: block;
+  line-height: 1.3; }
+  .title--small {
+    font-size: 30px;
+    font-weight: 200; }
+  .title--medium {
+    font-size: 40px;
+    font-weight: 300; }
+  .title--large {
+    font-size: 50px;
+    font-weight: 700; }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.button {
+  min-width: 150px;
+  max-width: 250px;
+  display: block;
+  margin: 1em;
+  padding: 1em 2em;
+  border: none;
+  background: none;
+  color: inherit;
+  position: relative;
+  z-index: 1;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: pointer; }
+  .button--login {
+    overflow: hidden;
+    color: white;
+    min-width: 180px; }
+    .button--login::after, .button--login::before {
+      content: attr(data-text);
+      position: absolute;
+      width: 100%;
+      height: 50%;
+      left: 0;
+      background: white;
+      color: var(--color-raisin-black);
+      overflow: hidden;
+      -webkit-transition: -webkit-transform 0.3s;
+      transition: transform 0.3s;
+      -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+      transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1); }
+    .button--login::before {
+      top: 0;
+      padding-top: 1em; }
+    .button--login::after {
+      bottom: 0;
+      line-height: 0; }
+    .button--login > span {
+      display: block;
+      -webkit-transform: scale3d(0.2, 0.2, 1);
+      transform: scale3d(0.2, 0.2, 1);
+      opacity: 0;
+      -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+      transition: transform 0.3s, opacity 0.3s;
+      -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+      transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1); }
+    .button--login:hover::before {
+      -webkit-transform: translate3d(0, -100%, 0);
+      transform: translate3d(0, -100%, 0); }
+    .button--login:hover::after {
+      -webkit-transform: translate3d(0, 100%, 0);
+      transform: translate3d(0, 100%, 0); }
+    .button--login:hover > span {
+      opacity: 1;
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1); }
+
+.login-container {
+  padding: 40px;
+  position: absolute;
+  top: calc(50% - 200px);
+  left: calc(50% - 150px);
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+  align-items: center;
+  color: white; }
+  .login-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-raisin-black);
+    /* border-radius: 10px; */
+    /* opacity: 0.5; */
+    z-index: 0; }
 
-.App-link {
-  color: #61dafb;
-}
+.login-text {
+  z-index: 2;
+  padding: 7px;
+  font-size: 20px;
+  max-width: 180px; }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+.page-heading {
+  font-size: 4rem;
+  font-weight: 600;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(253, 245, 230, 0.8); }
+
+.chat-page-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: row; }
+
+.chat-container {
+  flex-grow: 1;
+  position: relative; }
+
+.chat-input-container {
+  height: 20%; }
+
+.users-container {
+  height: 100%;
+  min-width: 20rem;
+  display: inline-block;
+  background-color: lightgray; }
+
+.messages-container {
+  overflow: scroll;
+  height: 80%;
+  padding-top: 5rem; }
+
+.message-wrapper {
+  display: block;
+  margin: 1rem;
+  text-align: left; }
+
+.message-container {
+  display: inline-block;
+  background-color: lightgrey;
+  padding: 2rem;
+  border-radius: 15px;
+  position: relative; }
+
+.message__user {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 0.7rem; }
+
+.message__content {
+  font-size: 2rem;
+  font-weight: 300;
+  margin-bottom: 1rem; }
+
+.message__time {
+  font-size: 1.4rem;
+  font-weight: 200;
+  position: absolute;
+  bottom: 5px;
+  right: 2rem; }
+
+.message--by-user {
+  text-align: right; }
+  .message--by-user > div {
+    background-color: var(--color-blue-green); }
+
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2; }
