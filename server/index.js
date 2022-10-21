@@ -1,19 +1,31 @@
-const express = require("express")
+const express = require('express')
 const path = require('path')
-
 const PORT = process.env.PORT || 3001
-
 const app = express()
+const http = require("http")
+const { Server } = require("socket.io")
 
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello from the server" })
+const cors = require("cors")
+app.use(cors())
+
+const server = http.createServer(app)
+
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"]
+  }
 })
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build', 'index.html'))
+io.on("connection", socket => {
+  console.log(`user connected with id ${socket.id}`)
+
+  socket.on("send_message", data => {
+    socket.broadcast.emit("receive_message", data)
+  })
 })
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`)
+server.listen(3001, () => {
+  console.log('server is running on port 3001')
 })
 

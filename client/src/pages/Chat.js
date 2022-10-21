@@ -1,4 +1,6 @@
-import { useState, useTransition, forwardRef, useRef} from 'react';
+import { useState, forwardRef, useRef, useEffect} from 'react';
+import io from 'socket.io-client';
+const socket = io.connect("http://localhost:3001");
 
 function Chat () {
   const [messages, addMessage] = useState([{
@@ -6,6 +8,18 @@ function Chat () {
     time: new Date(),
     message: 'This is my fist message yayyyy'
   }]);
+
+  const sendSocketMessage = (e) => {
+    e.preventDefault();
+    socket.emit("send_message", {message: currentMessage});
+  };
+
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+      alert(data.message)
+    })
+  }, [socket])
+
 
   const [currentUser, updateUser] = useState('Alex');
 
@@ -15,17 +29,16 @@ function Chat () {
 
   const formRef = useRef(null);
 
-  // console.log(messages);
-
   const sendMessage = (e) => {
     e.preventDefault();
+    
+    currentMessage !== '' &&
     addMessage(prevMessages => {
       return [...prevMessages, {username: 'paul',
       time: new Date(),
       message: currentMessage}]
     });
     updateCurrentMessage('');
-    // console.log(messages);
   }
 
   const onEnter = (e) => {
@@ -79,7 +92,7 @@ function Chat () {
         </div>
 
         <ChatInput 
-          onSubmit={sendMessage}
+          onSubmit={sendSocketMessage}
           value={currentMessage}
           onChange={setTypedText}
           onEnterPress={onEnter}
@@ -117,7 +130,7 @@ const ChatInput = forwardRef(({onSubmit, value, onChange, onEnterPress}, givenRe
         className='chat-input__button'
         type='submit'
       >
-        <img src="paper-plane.svg" className='chat-input__icon'/>
+        <img src="/paper-plane.svg" className='chat-input__icon'/>
       </button>
     </form>
 )

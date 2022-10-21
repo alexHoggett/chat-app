@@ -99,17 +99,13 @@ html {
       -webkit-transform: scale3d(1, 1, 1);
       transform: scale3d(1, 1, 1); }
 
-.login-container {
+.login__container {
   padding: 40px;
   position: absolute;
   top: calc(50% - 200px);
   left: calc(50% - 150px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   color: white; }
-  .login-container::before {
+  .login__container::before {
     content: '';
     position: absolute;
     top: 0;
@@ -119,13 +115,29 @@ html {
     background-color: var(--color-raisin-black);
     /* border-radius: 10px; */
     /* opacity: 0.5; */
-    z-index: 0; }
+    z-index: 1; }
 
-.login-text {
+.login__form {
+  position: relative;
+  z-index: 10; }
+
+.login__label {
+  font-size: 1.6rem;
+  font-family: 'Syne', sans-serif;
+  text-align: left;
+  display: block;
+  padding-left: 1.7rem;
+  margin-bottom: 0.5rem; }
+
+.login__text {
   z-index: 2;
-  padding: 7px;
+  padding: 1rem;
   font-size: 20px;
-  max-width: 180px; }
+  max-width: 180px;
+  color: white;
+  background-color: transparent;
+  outline: none;
+  border: 1px solid white; }
 
 .page-heading {
   font-size: 4rem;

@@ -1,16 +1,32 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 function Join () {
+
+  const [username, updateUsername] = useState(null);
+  const navigate = useNavigate();
+
+  const joinChat = () => {
+    if (username) {
+      navigate(`/chat/${username}`);
+    }
+  }
+
+  const usernameChanged = (e) => updateUsername(e.target.value);
 
   return (
     <div className="join-container">
       <h1 className="heading">
         <span className="title title--small">a</span><span className="title title--large">fully working</span><span className="title title--medium"> chat room</span>
       </h1>
-      <div className="login-container">
+      <div className="login__container">
         <JoinForm
           // value={'username'}
-          onSubmit={() => {}}
+          onSubmit={ joinChat }
+          onChange={ usernameChanged }
+          value={ username }
         >
-          Choose Username:
+          Username
         </JoinForm>
       </div>
 
@@ -18,31 +34,32 @@ function Join () {
   )
 }
 
-const JoinForm = ({value, onSubmit, children}) => {
+const JoinForm = ({onSubmit, onChange, value, children, }) => {
 
   return (
     <form 
-      action="/chat"
       onSubmit = { onSubmit }
-      className = { 'center' }
+      className = { 'login__form' }
+      onChange = { onChange }
+      value = { value }
     >
-      <label htmlFor='name'>{ children }</label>
+      <label htmlFor='name' className="login__label">{ children }</label>
       <input
         type="text"
         id="name"
         name="name"
-        className = {'login-text'}
-        value = { value }
+        className = {'login__text'}
+        // value = { value }
       />
       
       <JoinButton
-          onClick={() => {}}
-          type={"submit"}
-          className={'button button--login'}
-          dataText={'Join'}
-        >
-          Join
-        </JoinButton>
+        onClick={() => {}}
+        type={"submit"}
+        className={'button button--login'}
+        dataText={'Join'}
+      >
+        Join
+      </JoinButton>
     </form>
   );
 }
