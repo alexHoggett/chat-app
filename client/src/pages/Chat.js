@@ -1,40 +1,57 @@
-import { useState, forwardRef, useRef, useEffect} from 'react';
+import { useState, forwardRef, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
+import { useLocation } from "react-router-dom";
 const socket = io.connect("http://localhost:3001");
 
 function Chat () {
   const [messages, addMessage] = useState([{
-    username: 'alex',
+    username: "chatbot",
     time: new Date(),
-    message: 'This is my fist message yayyyy'
+    message: "Welcome to the chatroom 😈"
   }]);
 
-  const sendSocketMessage = (e) => {
-    e.preventDefault();
-    socket.emit("send_message", {message: currentMessage});
-  };
-
-  useEffect(() => {
-    socket.on("receive_message", (data) => {
-      alert(data.message)
+  const location = useLocation();
+  const [currentUser, updateUser] = useState(() => {
+    const user = location.pathname.split('/chat/')[1];
+    socket.emit("join_chat", {
+      username: user
     })
-  }, [socket])
+    return user;
+  });
 
-
-  const [currentUser, updateUser] = useState('Alex');
-
+  // To be made dynamic
   const [users, updateUsers] = useState(['Ben', 'Alex', 'Noor']);
 
   const [currentMessage, updateCurrentMessage] = useState('');
 
   const formRef = useRef(null);
 
+
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+      addMessage(prevMessages => {
+        return [...prevMessages, {
+          username: data.username,
+          time: new Date(),
+          message: data.message
+        }]
+      })
+    })
+    return () => {
+      socket.off("receive_message");
+    }
+  }, [socket])
+
   const sendMessage = (e) => {
     e.preventDefault();
-    
+    socket.emit("send_message", {
+      message: currentMessage,
+      username: currentUser,
+    });
+
     currentMessage !== '' &&
     addMessage(prevMessages => {
-      return [...prevMessages, {username: 'paul',
+      return [...prevMessages, {username: currentUser,
       time: new Date(),
       message: currentMessage}]
     });
@@ -71,13 +88,6 @@ function Chat () {
       <h1 className="page-heading heading">Chat</h1>
 
         <div className="messages-container">
-          <Message
-            username={"brian__em0"}
-            time={"19:12pm"}
-            messageByUser={true}
-          >
-            This is a message from me
-          </Message>
           {messages.map((message, index) =>
             <Message
               key={index}
@@ -92,7 +102,7 @@ function Chat () {
         </div>
 
         <ChatInput 
-          onSubmit={sendSocketMessage}
+          onSubmit={sendMessage}
           value={currentMessage}
           onChange={setTypedText}
           onEnterPress={onEnter}
