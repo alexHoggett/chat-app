@@ -32,16 +32,26 @@ io.on("connection", socket => {
     console.log(`${username} joined`)
 
     // send out new user list to all users
-    // console.log('this happening?')
     io.to(room).emit("update_users", users.getUsersInRoom(room))
+
+    io.to(room).emit("receive_message", {
+      message: `${username} has entered the chat.`,
+      username: 'chatbot',
+      room: room
+    })
   })
 
   socket.on("disconnect", () => {
     const user = users.getUser(socket.id)
     users.removeUser(socket.id)
-    console.log(`${user.username} has just left 👋🏼`)
     if (user) {
+      console.log(`${user.username} has just left 👋🏼`)
       io.to(user.room).emit("update_users", users.getUsersInRoom(user.room))
+      io.to(user.room).emit("receive_message", {
+        message: `${user.username} has just left the chat.`,
+        username: 'chatbot',
+        room: user.room
+      })
     }
   })
 

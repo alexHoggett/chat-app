@@ -15,8 +15,8 @@ function App() {
 
       <Router>
         <Routes>
-          <Route path="/" element={<Join />} />
           <Route path="/chat/:room/:name" element={<Chat />} />
+          <Route path="/" element={<Join />} />
         </Routes>
       </Router>
 

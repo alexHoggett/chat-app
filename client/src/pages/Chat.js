@@ -107,7 +107,7 @@ function Chat () {
             <Message
               key={index}
               username={message.username}
-              time={`${message.time.getHours()}:${message.time.getMinutes()}`}
+              time={`${message.time.getHours()}:${(message.time.getMinutes() < 10 ? '0':'') + message.time.getMinutes()}`}
               messageByUser={message.username == currentUser}
             >
             {message.message}
