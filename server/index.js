@@ -22,29 +22,35 @@ const io = new Server(server, {
 
 io.on("connection", socket => {
   // fired when a client connects
-  console.log(`user connected with id ${socket.id}`)
+  // console.log(`user connected with id ${socket.id}`)
   
   socket.on("join_room", ({username, room}) => {
     socket.join(room)
 
     // Add user to user list
     users.addUser(socket.id, username, room)
+    console.log(`${username} joined`)
 
     // send out new user list to all users
-    console.log('this happening?')
-    socket.to(room).emit("update_users", users.getUsersInRoom(room))
+    // console.log('this happening?')
+    io.to(room).emit("update_users", users.getUsersInRoom(room))
   })
 
-  socket.on("leave_room", room => {
-    console.log(`${users.getUser(socket.id).username} has left room ${room}`)
+  socket.on("disconnect", () => {
+    const user = users.getUser(socket.id)
     users.removeUser(socket.id)
-    // send out new user list to all users
-    socket.to(room).emit("update_users", users.getUsersInRoom(room))
-    socket.leave(room)
+    console.log(`${user.username} has just left 👋🏼`)
+    if (user) {
+      io.to(user.room).emit("update_users", users.getUsersInRoom(user.room))
+    }
+  })
+
+  socket.on('leave_room', (params) => {
+    socket.leave(params.room)
   })
 
   socket.on("send_message", data => {
-    socket.to(data.room).emit("receive_message", data);
+    io.to(data.room).emit("receive_message", data);
   })
 
 })

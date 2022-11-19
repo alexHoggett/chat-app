@@ -37,15 +37,20 @@ function Chat () {
     });
 
     
-    socket.emit("join_room", {username: currentUser, room: room});
+    socket.emit("join_room", {username: currentUser, room: room}, (err) => {
+      if (err){
+        console.log(err);
+      }
+    });
     
     socket.on("update_users", (users) => {
+      console.log('recieved updated user list')
       updateUsers(users);
     })
 
     return () => {
       socket.off("receive_message");
-      socket.emit("leave_room", room);
+      socket.emit("leave_room", {username: currentUser, room: room});
     }
   }, [socket])
 
@@ -59,12 +64,12 @@ function Chat () {
       username: currentUser,
     });
 
-    currentMessage !== '' &&
-    addMessage(prevMessages => {
-      return [...prevMessages, {username: currentUser,
-      time: new Date(),
-      message: currentMessage}]
-    })
+    // currentMessage !== '' &&
+    // addMessage(prevMessages => {
+    //   return [...prevMessages, {username: currentUser,
+    //   time: new Date(),
+    //   message: currentMessage}]
+    // })
     updateCurrentMessage('');
   }
 

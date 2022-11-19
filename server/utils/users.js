@@ -24,6 +24,12 @@ class Users {
     return this.users[this.getIndex(userID)];
   }
 
+  getUsername(userID) {
+    const user = this.getUser(userID);
+    if (user) return user.username;
+    else return null
+  }
+
   getUsersInRoom(room){
     const users = this.users.filter(user => 
       user.room === room
