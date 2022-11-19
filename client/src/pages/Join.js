@@ -4,15 +4,26 @@ import { useNavigate } from "react-router-dom";
 function Join () {
 
   const [username, updateUsername] = useState(null);
+  const [room, updateRoom] = useState('room1');
   const navigate = useNavigate();
 
   const joinChat = () => {
     if (username) {
-      navigate(`/chat/${username}`);
+      navigate(`/chat/${room}/${username}`);
     }
   }
 
-  const usernameChanged = (e) => updateUsername(e.target.value);
+  const formChange = (e) => {
+    switch (e.target.name){
+      case 'username':
+        updateUsername(e.target.value);
+        break;
+      case 'room':
+        console.log(e.target.value)
+        updateRoom(e.target.value);
+        break;
+    }
+  };
 
   return (
     <div className="join-container">
@@ -23,7 +34,7 @@ function Join () {
         <JoinForm
           // value={'username'}
           onSubmit={ joinChat }
-          onChange={ usernameChanged }
+          onChange={ formChange }
           value={ username }
         >
           Username
@@ -35,25 +46,31 @@ function Join () {
 }
 
 const JoinForm = ({onSubmit, onChange, value, children, }) => {
-
   return (
     <form 
       onSubmit = { onSubmit }
       className = { 'login__form' }
-      onChange = { onChange }
       value = { value }
+      onChange = {onChange}
     >
       <label htmlFor='name' className="login__label">{ children }</label>
       <input
         type="text"
-        id="name"
-        name="name"
+        id="username"
+        name="username"
         className = {'login__text'}
-        // value = { value }
       />
+      <select
+        id="room"
+        name="room"
+        className={'login__room'}
+        defaultValue={'room1'}
+      >
+        <option value="room1">room1</option>
+        <option value="room2">room2</option>
+      </select>
       
       <JoinButton
-        onClick={() => {}}
         type={"submit"}
         className={'button button--login'}
         dataText={'Join'}
@@ -72,8 +89,6 @@ const Button = ({onClick, className='', children}) =>
   >
     {children}
   </button>
-
-
 
 const JoinButton = ({onClick, type, className='', dataText, children}) =>
   <button

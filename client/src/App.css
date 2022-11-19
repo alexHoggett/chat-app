@@ -117,21 +117,23 @@ html {
     width: 100%;
     height: 100%;
     background-color: var(--color-raisin-black);
-    /* border-radius: 10px; */
-    /* opacity: 0.5; */
     z-index: 1; }
 
 .login__form {
   position: relative;
-  z-index: 10; }
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
 
 .login__label {
   font-size: 1.6rem;
   font-family: 'Syne', sans-serif;
-  text-align: left;
   display: block;
-  padding-left: 1.7rem;
-  margin-bottom: 0.5rem; }
+  float: left;
+  margin-bottom: 0.5rem;
+  max-width: 180px; }
 
 .login__text {
   z-index: 2;
@@ -143,14 +145,28 @@ html {
   outline: none;
   border: 1px solid white; }
 
-.page-heading {
+.login__room {
+  display: block;
+  width: 180px;
+  border: 1px solid white;
+  color: white;
+  font-size: 20px;
+  padding: 1rem;
+  margin-left: 1.7rem;
+  margin: 1rem;
+  background-color: var(--color-raisin-black); }
+
+.chat-heading {
   font-size: 4rem;
   font-weight: 600;
+  text-align: left;
+  padding: 2rem;
   position: absolute;
   width: 100%;
   top: 0;
   left: 0;
-  background-color: rgba(253, 245, 230, 0.8); }
+  background-color: oldlace;
+  z-index: 10; }
 
 .chat-page-container {
   height: 100vh;
@@ -198,15 +214,15 @@ html {
 
 .users__container {
   height: 100%;
-  min-width: 20rem;
+  min-width: 2rem;
   display: inline-block;
   background-color: var(--color-raisin-black);
   color: white;
-  border: 2rem solid oldlace;
   padding: 1.7rem; }
 
 .users__heading {
   font-size: 2.5rem;
+  padding: 1rem;
   margin-bottom: 1rem; }
 
 .users__list {
@@ -233,7 +249,7 @@ html {
 .messages-container {
   overflow: scroll;
   height: 90%;
-  padding-top: 5rem; }
+  padding-top: 10.3rem; }
 
 .message-wrapper {
   display: block;

@@ -1,6 +1,6 @@
 import { useState, forwardRef, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 const socket = io.connect("http://localhost:3001");
 
 function Chat () {
@@ -11,21 +11,19 @@ function Chat () {
   }]);
 
   const location = useLocation();
-  const [currentUser, updateUser] = useState(() => {
-    const user = location.pathname.split('/chat/')[1];
-    socket.emit("join_chat", {
-      username: user
-    })
-    return user;
-  });
+
+  let { name, room } = useParams();
+
+  const [currentUser, updateUser] = useState(name);
+
+  const [currentRoom, updateCurrentroom] = useState(room);
 
   // To be made dynamic
-  const [users, updateUsers] = useState(['Ben', 'Alex', 'Noor']);
+  const [users, updateUsers] = useState([]);
 
   const [currentMessage, updateCurrentMessage] = useState('');
 
   const formRef = useRef(null);
-
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
@@ -36,16 +34,28 @@ function Chat () {
           message: data.message
         }]
       })
+    });
+
+    
+    socket.emit("join_room", {username: currentUser, room: room});
+    
+    socket.on("update_users", (users) => {
+      updateUsers(users);
     })
+
     return () => {
       socket.off("receive_message");
+      socket.emit("leave_room", room);
     }
   }, [socket])
 
   const sendMessage = (e) => {
     e.preventDefault();
+
+    currentMessage != '' &&
     socket.emit("send_message", {
       message: currentMessage,
+      room: currentRoom,
       username: currentUser,
     });
 
@@ -54,7 +64,7 @@ function Chat () {
       return [...prevMessages, {username: currentUser,
       time: new Date(),
       message: currentMessage}]
-    });
+    })
     updateCurrentMessage('');
   }
 
@@ -71,7 +81,7 @@ function Chat () {
     <div className="chat-page-container">
 
       <div className="users__container">
-        <h3 className="users__heading heading">Active Users</h3>
+        <h3 className="users__heading">Active Users</h3>
         <ul className="users__list">
           {users.map((user, index) => 
             <li
@@ -85,7 +95,7 @@ function Chat () {
       </div>
 
       <div className="chat-container">
-      <h1 className="page-heading heading">Chat</h1>
+      <h1 className="chat-heading">Chat</h1>
 
         <div className="messages-container">
           {messages.map((message, index) =>
