@@ -119,8 +119,9 @@
       height: 100%;
       background-color: var(--color-raisin-black);
       // border-radius: 10px; 
-      // opacity: 0.5; 
+      opacity: 0.8; 
       z-index: 1;
+      border-radius: 30px;
     }
   }
 
@@ -148,7 +149,7 @@
     font-size: 20px;
     max-width: 180px;
     color: white;
-    background-color: transparent;
+    background-color: var(--color-raisin-black);
     outline: none;
     // margin: 1rem;
     border: 1px solid white;

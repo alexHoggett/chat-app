@@ -1,26 +1,27 @@
 import { useState, forwardRef, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
-import { useLocation, useParams } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
+
 const socket = io.connect("http://localhost:3001");
 
 function Chat () {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  if (!location.state || location.state.from !== 'JOIN_PAGE') {
+    navigate('/');
+  }
+  let { name, room } = useParams();
+  
+  
   const [messages, addMessage] = useState([{
     username: "chatbot",
     time: new Date(),
     message: "Welcome to the chatroom 😈"
   }]);
-
-  const location = useLocation();
-
-  let { name, room } = useParams();
-
   const [currentUser, updateUser] = useState(name);
-
   const [currentRoom, updateCurrentroom] = useState(room);
-
-  // To be made dynamic
   const [users, updateUsers] = useState([]);
-
   const [currentMessage, updateCurrentMessage] = useState('');
 
   const formRef = useRef(null);
@@ -63,13 +64,6 @@ function Chat () {
       room: currentRoom,
       username: currentUser,
     });
-
-    // currentMessage !== '' &&
-    // addMessage(prevMessages => {
-    //   return [...prevMessages, {username: currentUser,
-    //   time: new Date(),
-    //   message: currentMessage}]
-    // })
     updateCurrentMessage('');
   }
 

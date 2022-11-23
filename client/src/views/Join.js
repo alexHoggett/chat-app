@@ -2,14 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Join () {
-
   const [username, updateUsername] = useState(null);
   const [room, updateRoom] = useState('room1');
   const navigate = useNavigate();
 
   const joinChat = () => {
     if (username) {
-      navigate(`/chat/${room}/${username}`);
+      navigate(`/chat/${room}/${username}`, {state: {from: 'JOIN_PAGE'}});
     }
   }
 
@@ -81,15 +80,6 @@ const JoinForm = ({onSubmit, onChange, value, children, }) => {
   );
 }
 
-
-const Button = ({onClick, className='', children}) =>
-  <button
-    onClick = {onClick}
-    className = {className}
-  >
-    {children}
-  </button>
-
 const JoinButton = ({onClick, type, className='', dataText, children}) =>
   <button
     onClick = {onClick}
@@ -99,10 +89,5 @@ const JoinButton = ({onClick, type, className='', dataText, children}) =>
   >
     <span>{children}</span>
   </button>
-
-
-
-const JoinText = ({}) =>
-  <input></input>
 
 export default Join;
