@@ -73,6 +73,11 @@ function Chat () {
       formRef.current.requestSubmit()
     }
   }
+
+  const leaveRoom = () => {
+    navigate('/');
+    socket.emit('leave_room', room);
+  }
   
   const setTypedText = (e) => updateCurrentMessage(e.target.value);
 
@@ -94,8 +99,14 @@ function Chat () {
       </div>
 
       <div className="chat-container">
-      <h1 className="chat-heading">{room}</h1>
-
+        <h1 className="chat-heading">
+          {room}
+          <img 
+          src="/leave.svg"
+          className="leave-icon"
+          onClick={ leaveRoom }
+        />
+        </h1>
         <div className="messages-container">
           {messages.map((message, index) =>
             <Message

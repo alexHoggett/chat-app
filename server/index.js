@@ -55,8 +55,10 @@ io.on("connection", socket => {
     }
   })
 
-  socket.on('leave_room', (params) => {
-    socket.leave(params.room)
+  socket.on('leave_room', (room) => {
+    socket.leave(room)
+    users.removeUser(socket.id)
+
   })
 
   socket.on("send_message", data => {

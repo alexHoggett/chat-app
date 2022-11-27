@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 function Join () {
   const [username, updateUsername] = useState(null);
-  const [room, updateRoom] = useState('room1');
+  const [room, updateRoom] = useState('Room 1');
   const navigate = useNavigate();
 
   const joinChat = () => {
@@ -63,10 +63,10 @@ const JoinForm = ({onSubmit, onChange, value, children, }) => {
         id="room"
         name="room"
         className={'login__room'}
-        defaultValue={'room1'}
+        defaultValue={'Room 1'}
       >
-        <option value="room1">Room 1</option>
-        <option value="room2">Room 2</option>
+        <option value="Room 1">Room 1</option>
+        <option value="Room 2">Room 2</option>
       </select>
       
       <JoinButton
