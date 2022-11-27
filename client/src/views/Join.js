@@ -27,7 +27,7 @@ function Join () {
   return (
     <div className="join-container">
       <h1 className="heading">
-        <span className="title title--small">a</span><span className="title title--large">fully working</span><span className="title title--medium"> chat room</span>
+        <span className="title title--small">a</span><span className="title title--large">chat room</span>
       </h1>
       <div className="login__container">
         <JoinForm
@@ -65,8 +65,8 @@ const JoinForm = ({onSubmit, onChange, value, children, }) => {
         className={'login__room'}
         defaultValue={'room1'}
       >
-        <option value="room1">room1</option>
-        <option value="room2">room2</option>
+        <option value="room1">Room 1</option>
+        <option value="room2">Room 2</option>
       </select>
       
       <JoinButton

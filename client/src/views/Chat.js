@@ -94,7 +94,7 @@ function Chat () {
       </div>
 
       <div className="chat-container">
-      <h1 className="chat-heading">Chat</h1>
+      <h1 className="chat-heading">{room}</h1>
 
         <div className="messages-container">
           {messages.map((message, index) =>

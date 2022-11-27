@@ -1,7 +1,5 @@
 # React Instant Messaging App
 
----
-
 I will get a working demo hosted on heroku ASAP.
 This is a personal project, to get more comfortable with React and its ecosystem.
 
