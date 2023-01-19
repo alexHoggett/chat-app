@@ -16,3 +16,17 @@ An immitation of any instant messaging service which is popular on every platfor
 - React Router v6
 - SASS
 - Jest
+
+## How to Use
+
+```bash
+# install all dependencies
+npm install
+
+# in /server
+npm run start
+
+# also in another terminal
+# in /client
+npm run start
+```
