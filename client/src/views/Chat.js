@@ -2,7 +2,7 @@ import { useState, forwardRef, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 
-const socket = io.connect("http://localhost:3001");
+const socket = io.connect("http://localhost:3001/");
 
 function Chat () {
   const location = useLocation();
