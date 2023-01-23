@@ -20,13 +20,12 @@ An immitation of any instant messaging service which is popular on every platfor
 ## How to Use
 
 ```bash
-# install all dependencies
-npm install
-
 # in /server
+npm install
 npm run start
 
 # also in another terminal
 # in /client
+npm install
 npm run start
 ```
